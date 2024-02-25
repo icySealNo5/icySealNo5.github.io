@@ -1,31 +1,103 @@
 <html>
   <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>标题</title>
+    <style>
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+      li {
+        padding: 0 5px;
+        text-align: left;
+        cursor: pointer;
+      }
+      li:hover {
+        font-style: italic;
+        text-decoration: underline;
+      }
+      #content {
+        clear: both;
+        display: block;
+      }
+    </style>
   </head>
   <body>
-    <object data="static/info-001-020.pdf" type="application/pdf" width="100%" height="100%">
-      <p>您的浏览器不支持查看PDF文件，请下载<a href="static/info-001-020.pdf">这个PDF文件</a>来查看。</p>
-    </object>
-    <object data="static/info-021-040.pdf" type="application/pdf" width="100%" height="100%">
-      <p>您的浏览器不支持查看PDF文件，请下载<a href="static/info-021-040.pdf">这个PDF文件</a>来查看。</p>
-    </object>
-    <object data="static/info-041-060.pdf" type="application/pdf" width="100%" height="100%">
-      <p>您的浏览器不支持查看PDF文件，请下载<a href="static/info-041-060.pdf">这个PDF文件</a>来查看。</p>
-    </object>
-    <object data="static/info-061-080.pdf" type="application/pdf" width="100%" height="100%">
-      <p>您的浏览器不支持查看PDF文件，请下载<a href="static/info-061-080.pdf">这个PDF文件</a>来查看。</p>
-    </object>
-    <object data="static/info-081-100.pdf" type="application/pdf" width="100%" height="100%">
-      <p>您的浏览器不支持查看PDF文件，请下载<a href="static/info-081-100.pdf">这个PDF文件</a>来查看。</p>
-    </object>
-    <object data="static/info-101-105.pdf" type="application/pdf" width="100%" height="100%">
-      <p>您的浏览器不支持查看PDF文件，请下载<a href="static/info-101-105.pdf">这个PDF文件</a>来查看。</p>
-    </object>
-<!--     <iframe src="./static/info-001-020.pdf" width="100%" height="600px"></iframe>
-    <iframe src="./static/info-021-040.pdf" width="100%" height="600px"></iframe>
-    <iframe src="./static/info-041-060.pdf" width="100%" height="600px"></iframe>
-    <iframe src="./static/info-061-080.pdf" width="100%" height="600px"></iframe>
-    <iframe src="./static/info-081-100.pdf" width="100%" height="600px"></iframe>
-    <iframe src="./static/info-101-105.pdf" width="100%" height="600px"></iframe> -->
+    <ul id="ul">
+      <li index="0">第一部分</li>
+      <li index="1">第二部分</li>
+      <li index="2">第三部分</li>
+      <li index="3">第四部分</li>
+      <li index="4">第五部分</li>
+      <li index="5">第六部分</li>
+    </ul>
+    <div id="content">
+      
+    </div>
   </body>
+  <script>
+    var size = 20, max = 105;
+    var mainStr = "";
+    var strStart = "<img src=\"static/综合样本PDF第四版0912-";
+    var strEnd = ".jpg\" width=\"98%\" alt=\"加载失败\"></img>";
+    var itemli = document.getElementsByTagName("li");
+    for(var i = 0; i<itemli.length; i++){
+      itemli[i].index = i; //给每个li定义一个属性索引值
+      itemli[i].onclick = function(){
+        mainStr = "";
+        var content = document.getElementById("content");
+        if(content.index == this.index){
+          mainStr += content.index;
+        }else{
+          //do it
+          for(var j=0; j<size; j++){
+            //<img src="static/综合样本PDF第四版0912-001.jpg"></img>
+            var num = getNum(parseInt(this.index)*size+j+1);
+            if(num<=max){
+              mainStr += strStart + num + strEnd;
+            }
+          }
+          content.index = this.index;
+          content.innerHTML = mainStr;
+        }
+      }
+    }
+
+    function getNum(num){
+      if("NaN"==num){
+        return "0";
+      }
+      if(num/10.00<1){
+        return "00"+num;
+      }
+      if(num/100.00<1){
+        return "0"+num;
+      }
+      return ""+num;
+    }
+      // var mainStr = ""
+      // mainArr.forEach(e => {
+      //   mainStr += `<div class="item-wrap">
+      //   <div class="item-title">${e.title}</div>
+      //   <div class="text">
+      //   ${e.children.map((element, index) => {
+      //     let ele = `<p class="item-question">${index + 1}.${element.question}</p>` 
+      //     if(element.children!=undefined){
+      //       element.children.forEach(item=>{
+      //         ele += `<p class="item-answer">${item}</p>`  
+      //       })
+      //     }else{    			
+      //       ele += `<p class="item-answer">${element.answer}</p>`  
+      //       console.log(element.children)
+      //     }    		
+      //     return ele
+      //   }).join('')}
+      //   </div>
+      //   </div>`
+      // })
+      // //拼接完字符串数组后用innerHTML把它渲染到页面中
+      // document.getElementById("mainID").innerHTML = mainStr;
+  </script>
 </html>
